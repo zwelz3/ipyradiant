@@ -15,9 +15,9 @@ from .query import QueryWidget, service_patch_rdflib
 from .visualization import (
     CytoscapeVisualizer,
     DatashaderVisualizer,
-    LayoutSelector,
-    InteractiveViewer,
     GetOutgoingPredicateObjects,
+    InteractiveViewer,
+    LayoutSelector,
 )
 
 __all__ = [

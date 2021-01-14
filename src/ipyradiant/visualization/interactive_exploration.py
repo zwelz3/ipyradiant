@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Union
 
 import traitlets as trt
@@ -8,7 +9,6 @@ import pandas
 import rdflib
 from ipycytoscape import Edge, Node
 from ipyradiant.query.api import SPARQLQueryFramer
-from pprint import pprint
 
 
 class GetOutgoingPredicateObjects(SPARQLQueryFramer):
@@ -149,7 +149,10 @@ class InteractiveViewer(W.VBox):
             },
             {
                 "selector": "edge.directed",
-                "style": {"curve-style": "bezier", "target-arrow-shape": "triangle",},
+                "style": {
+                    "curve-style": "bezier",
+                    "target-arrow-shape": "triangle",
+                },
             },
             {"selector": "edge.multiple_edges", "style": {"curve-style": "bezier"}},
         ]

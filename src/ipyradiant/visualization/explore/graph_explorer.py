@@ -7,6 +7,7 @@ import ipywidgets as W
 from rdflib import Graph
 
 from ...basic_tools.custom_uri_ref import CustomURI
+from ...basic_tools.term import CustomItem
 from ...basic_tools.uri_widgets import SelectMultipleURI
 from ...query.api import SPARQLQueryFramer, build_values
 
@@ -18,18 +19,6 @@ class AllTypes(SPARQLQueryFramer):
         ?s a ?o .
     }
     """
-
-
-class CustomItem:
-    """Class used to build list items with custom repr"""
-
-    def __init__(self, _repr: callable, **kwargs):
-        self._repr = _repr
-        for attr, value in kwargs.items():
-            self.__setattr__(attr, value)
-
-    def __repr__(self):
-        return self._repr(self)
 
 
 class MetaSubjectsOfType(type):

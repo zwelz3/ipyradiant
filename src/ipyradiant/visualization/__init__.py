@@ -15,5 +15,5 @@ __all__ = [
 from .base import NXBase, VisualizerBase
 from .cytoscape import CytoscapeVisualizer
 from .datashader_vis import DatashaderVisualizer
+from .interactive_exploration import GetOutgoingPredicateObjects, InteractiveViewer
 from .tools import LayoutSelector
-from .interactive_exploration import InteractiveViewer, GetOutgoingPredicateObjects
