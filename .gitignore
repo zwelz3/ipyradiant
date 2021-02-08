@@ -13,6 +13,7 @@ __pycache__/
 *.sqlite
 *.tgz
 build/
+design/local/
 dist/
 envs/
 examples/**/*.html

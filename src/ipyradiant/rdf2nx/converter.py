@@ -210,12 +210,14 @@ class RDF2NX:
             NamespaceManager, Dict[str, Union[str, Namespace, URIRef]]
         ] = None,
         strict: bool = False,
+        include_missing_nodes: bool = False,
     ) -> MultiDiGraph:
         """The main method for converting an RDF graph to a networkx representation.
 
         :param rdf_graph: the rdflib.graph.Graph containing the raw data
         :param namespaces: the collection of namespaces used to simplify URIs
         :param strict: boolean for Literal conversion (True = supported types only)
+        :param include_missing_nodes: flag for creating placeholder nodes for missing source/target
         :return: the networkx MultiDiGraph containing all collected node/edge data
         """
         if cls.initNs is None:
@@ -245,6 +247,13 @@ class RDF2NX:
 
             if edge_source in nx_graph.nodes and edge_target in nx_graph.nodes:
                 edge_attrs["iri"] = edge_iri
+                nx_graph.add_edge(edge_source, edge_target, **edge_attrs)
+            elif include_missing_nodes:
+                # TODO is there a simple way to get labels here?
+                if edge_source not in nx_graph.nodes:
+                    nx_graph.add_node(edge_source)
+                elif edge_target not in nx_graph.nodes:
+                    nx_graph.add_node(edge_target)
                 nx_graph.add_edge(edge_source, edge_target, **edge_attrs)
             else:
                 if edge_source not in nx_graph.nodes:

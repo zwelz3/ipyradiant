@@ -6,6 +6,14 @@ NODE = {
     },
 }
 
+# TODO cannot get this class assignment to stop crashing ipycytoscape
+# NODE_CLICKED = {
+#     "selector": "node.clicked",
+#     "style": {
+#         "border-width": "1px",
+#     },
+# },
+
 LABELLED_NODE = {
     "selector": "node",
     "style": {

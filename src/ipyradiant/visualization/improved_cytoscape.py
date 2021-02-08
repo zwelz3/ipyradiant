@@ -48,13 +48,17 @@ class CytoscapeViewer(W.VBox):
     )
     cyto_layout = T.Unicode(default_value="random")
     cyto_style = T.List()
+    include_missing_nodes = False
     _render_large_graphs = False
     _rdf_label = "rdfs:label"
     _nx_label = "label"
     _rdf_converter: RDF2NX = RDF2NX
 
     def update_style(self):
-        """Update style based on class attributes."""
+        """Update style based on class attributes.
+        
+        TODO this is not maintainable
+        """
         style_list = [style.DIRECTED_EDGE, style.MULTIPLE_EDGES]
         if self.node_labels and self.edge_labels:
             style_list = style.LABELLED_DIRECTED_GRAPH
@@ -121,7 +125,10 @@ class CytoscapeViewer(W.VBox):
         elif isinstance(self.graph, rdflib.Graph):
             # Note: rdflib_to_networkx_multidigraph does not store the predicate AT ALL,
             #  so it is basically unrecoverable (e.g. for labelling); using _rdf_converter
-            nx_graph = self._rdf_converter.convert(self.graph)
+            nx_graph = self._rdf_converter.convert(
+                self.graph, 
+                include_missing_nodes=self.include_missing_nodes
+            )
             self.cytoscape_widget.graph.add_graph_from_networkx(nx_graph)
             for node in self.cytoscape_widget.graph.nodes:
                 node.data["_label"] = node.data.get(

@@ -1,0 +1,245 @@
+@prefix ns1: <https://swapi.co/vocabulary/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://swapi.co/resource/film/4> a ns1:Film ;
+    rdfs:label "The Phantom Menace"^^xsd:string ;
+    ns1:character <https://swapi.co/resource/aleena/47>,
+        <https://swapi.co/resource/cerean/52>,
+        <https://swapi.co/resource/chagrian/59>,
+        <https://swapi.co/resource/droid/2>,
+        <https://swapi.co/resource/droid/3>,
+        <https://swapi.co/resource/dug/41>,
+        <https://swapi.co/resource/gungan/36>,
+        <https://swapi.co/resource/gungan/37>,
+        <https://swapi.co/resource/gungan/38>,
+        <https://swapi.co/resource/human/10>,
+        <https://swapi.co/resource/human/11>,
+        <https://swapi.co/resource/human/21>,
+        <https://swapi.co/resource/human/32>,
+        <https://swapi.co/resource/human/34>,
+        <https://swapi.co/resource/human/35>,
+        <https://swapi.co/resource/human/39>,
+        <https://swapi.co/resource/human/42>,
+        <https://swapi.co/resource/human/43>,
+        <https://swapi.co/resource/human/51>,
+        <https://swapi.co/resource/hutt/16>,
+        <https://swapi.co/resource/iktotchi/56>,
+        <https://swapi.co/resource/keldor/58>,
+        <https://swapi.co/resource/nautolan/53>,
+        <https://swapi.co/resource/neimodian/33>,
+        <https://swapi.co/resource/quermian/57>,
+        <https://swapi.co/resource/tholothian/55>,
+        <https://swapi.co/resource/toong/50>,
+        <https://swapi.co/resource/toydarian/40>,
+        <https://swapi.co/resource/twilek/46>,
+        <https://swapi.co/resource/vulptereen/48>,
+        <https://swapi.co/resource/xexto/49>,
+        <https://swapi.co/resource/yodasspecies/20>,
+        <https://swapi.co/resource/zabrak/44>,
+        <https://swapi.co/resource/zabrak/54> ;
+    ns1:desc "None"^^xsd:string ;
+    ns1:director "George Lucas"^^xsd:string ;
+    ns1:episodeId 1 ;
+    ns1:openingCrawl """Turmoil has engulfed the\r
+Galactic Republic. The taxation\r
+of trade routes to outlying star\r
+systems is in dispute.\r
+\r
+Hoping to resolve the matter\r
+with a blockade of deadly\r
+battleships, the greedy Trade\r
+Federation has stopped all\r
+shipping to the small planet\r
+of Naboo.\r
+\r
+While the Congress of the\r
+Republic endlessly debates\r
+this alarming chain of events,\r
+the Supreme Chancellor has\r
+secretly dispatched two Jedi\r
+Knights, the guardians of\r
+peace and justice in the\r
+galaxy, to settle the conflict...."""^^xsd:string ;
+    ns1:planet <https://swapi.co/resource/planet/1>,
+        <https://swapi.co/resource/planet/8>,
+        <https://swapi.co/resource/planet/9> ;
+    ns1:releaseDate "1999-05-19"^^xsd:date ;
+    ns1:starship <https://swapi.co/resource/starship/31>,
+        <https://swapi.co/resource/starship/32>,
+        <https://swapi.co/resource/starship/39>,
+        <https://swapi.co/resource/starship/40>,
+        <https://swapi.co/resource/starship/41> ;
+    ns1:vehicle <https://swapi.co/resource/vehicle/33>,
+        <https://swapi.co/resource/vehicle/34>,
+        <https://swapi.co/resource/vehicle/35>,
+        <https://swapi.co/resource/vehicle/36>,
+        <https://swapi.co/resource/vehicle/37>,
+        <https://swapi.co/resource/vehicle/38>,
+        <https://swapi.co/resource/vehicle/42> .
+
+<https://swapi.co/resource/human/1> a ns1:Character,
+        ns1:Human ;
+    rdfs:label "Luke Skywalker"^^xsd:string ;
+    ns1:birthYear "19BBY"^^xsd:string ;
+    ns1:desc "Luke Skywalker is a fictional character and the main protagonist of the original film trilogy of the Star Wars franchise created by George Lucas. The character, portrayed by Mark Hamill, is an important figure in the Rebel Alliance\\s struggle against the Galactic Empire. He is the twin brother of Rebellion leader Princess Leia Organa of Alderaan, a friend and brother-in-law of smuggler Han Solo, an apprentice to Jedi Masters Obi-Wan \"Ben\" Kenobi and Yoda, the son of fallen Jedi Anakin Skywalker (Darth Vader) and Queen of Naboo/Republic Senator Padmé Amidala and maternal uncle of Kylo Ren / Ben Solo. The now non-canon Star Wars expanded universe depicts him as a powerful Jedi Master, husband of Mara Jade, the father of Ben Skywalker and maternal uncle of Jaina, Jacen and Anakin Solo., In 2015, the character was selected by Empire magazine as the 50th greatest movie character of all time.2 On their list of the 100 Greatest Fictional Characters, Fandomania.com ranked the character at number 14.3"^^xsd:string ;
+    ns1:eyeColor "blue"^^xsd:string ;
+    ns1:film <https://swapi.co/resource/film/1>,
+        <https://swapi.co/resource/film/2>,
+        <https://swapi.co/resource/film/3>,
+        <https://swapi.co/resource/film/6>,
+        <https://swapi.co/resource/film/7> ;
+    ns1:friend <https://swapi.co/resource/droid/3> ;
+    ns1:gender "male"^^xsd:string ;
+    ns1:hairColor "blond"^^xsd:string ;
+    ns1:height "172.0"^^xsd:float ;
+    ns1:homeworld <https://swapi.co/resource/planet/1> ;
+    ns1:mass 77.0 ;
+    ns1:skinColor "fair"^^xsd:string ;
+    ns1:starship <https://swapi.co/resource/starship/12>,
+        <https://swapi.co/resource/starship/22> ;
+    ns1:vehicle <https://swapi.co/resource/vehicle/14>,
+        <https://swapi.co/resource/vehicle/30> .
+
+<https://swapi.co/resource/human/4> a ns1:Character,
+        ns1:Human ;
+    rdfs:label "Darth Vader"^^xsd:string ;
+    ns1:birthYear "41.9BBY"^^xsd:string ;
+    ns1:desc "Darth Vader, also known by his birth name Anakin Skywalker, is a fictional character in the Star Wars franchise.123 Vader appears in the original film trilogy as a pivotal antagonist whose actions drive the plot, while his past as Anakin Skywalker and the story of his corruption are central to the narrative of the prequel trilogy., The character was created by George Lucas and has been portrayed by numerous actors. His appearances span the first six Star Wars films, as well as Rogue One, and his character is heavily referenced in Star Wars: The Force Awakens. He is also an important character in the Star Wars expanded universe of television series, video games, novels, literature and comic books. Originally a Jedi prophesied to bring balance to the Force, he falls to the dark side of the Force and serves the evil Galactic Empire at the right hand of his Sith master, Emperor Palpatine (also known as Darth Sidious).4 He is also the father of Luke Skywalker and Princess Leia Organa, secret husband of Padmé Amidala and grandfather of Kylo Ren., Darth Vader has become one of the most iconic villains in popular culture, and has been listed among the greatest villains and fictional characters ever.56 The American Film Institute listed him as the third greatest movie villain in cinema history on 100 Years... 100 Heroes and Villains, behind Hannibal Lecter and Norman Bates.7 However, other critics consider him a tragic hero, citing his original motivations for the greater good before his fall to the dark side.89"^^xsd:string ;
+    ns1:eyeColor "yellow"^^xsd:string ;
+    ns1:film <https://swapi.co/resource/film/1>,
+        <https://swapi.co/resource/film/2>,
+        <https://swapi.co/resource/film/3>,
+        <https://swapi.co/resource/film/6> ;
+    ns1:gender "male"^^xsd:string ;
+    ns1:hairColor "none"^^xsd:string ;
+    ns1:height "202.0"^^xsd:float ;
+    ns1:homeworld <https://swapi.co/resource/planet/1> ;
+    ns1:mass 136.0 ;
+    ns1:skinColor "white"^^xsd:string ;
+    ns1:starship <https://swapi.co/resource/starship/13> .
+
+<https://swapi.co/resource/human/5> a ns1:Character,
+        ns1:Human ;
+    rdfs:label "Leia Organa"^^xsd:string ;
+    ns1:birthYear "19BBY"^^xsd:string ;
+    ns1:desc "\"Princess Leia Organa of Alderaan (also Senator Leia Organa or General Leia Organa) is a fictional character in the Star Wars franchise, portrayed in films by Carrie Fisher. Introduced in the original Star Wars film in 1977, Leia is princess of the planet Alderaan, a member of the Imperial Senate and an agent of the Rebel Alliance. She thwarts the sinister Sith Lord Darth Vader and helps bring about the destruction of the Empires cataclysmic superweapon, the Death Star. In The Empire Strikes Back (1980), Leia commands a Rebel base and evades Vader as she falls in love with the smuggler, Han Solo. In Return of the Jedi (1983), Leia leads the operation to rescue Han from the crime lord Jabba the Hutt, and is revealed to be Vaders daughter and the twin sister of Luke Skywalker. The prequel film Revenge of the Sith (2005) establishes that the twins mother is Senator (and former queen) Padmé Amidala of Naboo, who dies after childbirth. Leia is adopted by Senator Bail and Queen Breha Organa of Alderaan. In The Force Awakens (2015), Leia is the founder and General of the Resistance against the First Order and has a son with Han named Ben, who goes by the name Kylo Ren.\", In the original Star Wars expanded universe (1977–2014) of novels, comics and video games, which are set in an alternate continuity, Leia continues her adventures with Han and Luke after Return of the Jedi, fighting Imperial resurgences and new threats to the galaxy. She becomes the Chief of State of the New Republic and a Jedi Master, and is the mother to three children by Han: Jaina, Jacen and Anakin Solo., One of the more popular Star Wars characters, Leia has been called a 1980s icon, a feminist hero and model for other adventure heroines. She has appeared in many derivative works and merchandising, and has been referenced or parodied in several TV shows and films. Her \"cinnamon buns\" hairstyle from Star Wars (1977) and metal bikini from Return of the Jedi have become cultural icons."^^xsd:string ;
+    ns1:eyeColor "brown"^^xsd:string ;
+    ns1:film <https://swapi.co/resource/film/1>,
+        <https://swapi.co/resource/film/2>,
+        <https://swapi.co/resource/film/3>,
+        <https://swapi.co/resource/film/6>,
+        <https://swapi.co/resource/film/7> ;
+    ns1:gender "female"^^xsd:string ;
+    ns1:hairColor "brown"^^xsd:string ;
+    ns1:height "150.0"^^xsd:float ;
+    ns1:homeworld <https://swapi.co/resource/planet/2> ;
+    ns1:mass 49.0 ;
+    ns1:skinColor "light"^^xsd:string ;
+    ns1:vehicle <https://swapi.co/resource/vehicle/30> .
+
+<https://swapi.co/resource/planet/2> a ns1:Planet ;
+    rdfs:label "Alderaan"^^xsd:string ;
+    ns1:climate "temperate"^^xsd:string ;
+    ns1:desc "Alderaan is a fictional planet featured in the Star Wars space opera franchise. It is blue-green in appearance and is depicted as a terrestrial planet with humanoid inhabitants. It is the home of Princess Leia, one of the lead characters in the film series. In the original 1977 film, Star Wars, Alderaan is blown up by the Death Star, a giant space station capable of destroying entire planets.2"^^xsd:string ;
+    ns1:diameter 12500 ;
+    ns1:film <https://swapi.co/resource/film/1>,
+        <https://swapi.co/resource/film/6> ;
+    ns1:gravity "1 standard"^^xsd:string ;
+    ns1:orbitalPeriod 364 ;
+    ns1:population 2000000000 ;
+    ns1:resident <https://swapi.co/resource/human/5>,
+        <https://swapi.co/resource/human/68>,
+        <https://swapi.co/resource/human/81> ;
+    ns1:rotationPeriod 24 ;
+    ns1:surfaceWater 40 ;
+    ns1:terrain "grasslands, mountains"^^xsd:string .
+
+<https://swapi.co/resource/planet/1> a ns1:Planet ;
+    rdfs:label "Tatooine"^^xsd:string ;
+    ns1:climate "arid"^^xsd:string ;
+    ns1:desc "Tatooine /ˌtætuːˈiːn/ is a fictional desert planet that appears in the Star Wars space opera franchise. It is beige-coloured and is depicted as a remote, desolate world orbiting a pair of binary stars, and inhabited by human settlers and a variety of other life forms. The planet was first seen in the original 1977 film Star Wars, and has to date featured in a total five Star Wars theatrical films., It is noted as the homeworld of the protagonist of the Star Wars saga, Luke Skywalker, and also of his father, Anakin Skywalker. Shots of the binary sunset over the Tatooine desert are considered to be an iconic image of the film series.12"^^xsd:string ;
+    ns1:diameter 10465 ;
+    ns1:film <https://swapi.co/resource/film/1>,
+        <https://swapi.co/resource/film/3>,
+        <https://swapi.co/resource/film/4>,
+        <https://swapi.co/resource/film/5>,
+        <https://swapi.co/resource/film/6> ;
+    ns1:gravity "1 standard"^^xsd:string ;
+    ns1:orbitalPeriod 304 ;
+    ns1:population 200000 ;
+    ns1:resident <https://swapi.co/resource/droid/2>,
+        <https://swapi.co/resource/droid/8>,
+        <https://swapi.co/resource/human/1>,
+        <https://swapi.co/resource/human/11>,
+        <https://swapi.co/resource/human/4>,
+        <https://swapi.co/resource/human/43>,
+        <https://swapi.co/resource/human/6>,
+        <https://swapi.co/resource/human/62>,
+        <https://swapi.co/resource/human/7>,
+        <https://swapi.co/resource/human/9> ;
+    ns1:rotationPeriod 23 ;
+    ns1:surfaceWater 1 ;
+    ns1:terrain "desert"^^xsd:string .
+
+<https://swapi.co/resource/film/1> a ns1:Film ;
+    rdfs:label "A New Hope"^^xsd:string ;
+    ns1:character <https://swapi.co/resource/droid/2>,
+        <https://swapi.co/resource/droid/3>,
+        <https://swapi.co/resource/droid/8>,
+        <https://swapi.co/resource/human/1>,
+        <https://swapi.co/resource/human/10>,
+        <https://swapi.co/resource/human/12>,
+        <https://swapi.co/resource/human/14>,
+        <https://swapi.co/resource/human/18>,
+        <https://swapi.co/resource/human/19>,
+        <https://swapi.co/resource/human/4>,
+        <https://swapi.co/resource/human/5>,
+        <https://swapi.co/resource/human/6>,
+        <https://swapi.co/resource/human/7>,
+        <https://swapi.co/resource/human/81>,
+        <https://swapi.co/resource/human/9>,
+        <https://swapi.co/resource/hutt/16>,
+        <https://swapi.co/resource/rodian/15>,
+        <https://swapi.co/resource/wookiee/13> ;
+    ns1:desc "\"Star Wars (later retitled Star Wars: Episode IV – A New Hope) is a 1977 American epic space opera film written and directed by George Lucas. It is the first film in the original Star Wars trilogy, the first Star Wars movie in general, and the beginning of the Star Wars franchise. Starring Mark Hamill, Harrison Ford, Carrie Fisher, Peter Cushing, Alec Guinness, David Prowse, James Earl Jones, Anthony Daniels, Kenny Baker, and Peter Mayhew, the films plot focuses on the Rebel Alliance, led by Princess Leia (Fisher), and its attempt to destroy the Galactic Empires space station, the Death Star. This conflict disrupts the isolated life of farmhand Luke Skywalker (Hamill), who inadvertently acquires a pair of droids that possess stolen architectural plans for the Death Star. When the Empire begins a destructive search for the missing droids, Skywalker accompanies Jedi Master Obi-Wan Kenobi (Guinness) on a mission to return the plans to the Rebel Alliance and rescue Leia from her imprisonment by the Empire.\", Star Wars was released in theatres in the United States on May 25, 1977. It earned $461 million in the U.S. and $314 million overseas, totaling $775 million ($3.132 billion in 2017 dollars, adjusted for inflation). It surpassed Jaws (1975) to become the highest-grossing film of all time until the release of E.T. the Extra-Terrestrial (1982). When adjusted for inflation, Star Wars is the second-highest-grossing film in North America, and the third-highest-grossing film in the world. It received ten Academy Award nominations (including Best Picture), winning seven. It was among the first films to be selected as part of the U.S. Library of Congress\\ National Film Registry as being \"culturally, historically, or aesthetically significant\". At the time, it was the most recent film on the registry and the only one chosen from the 1970s. Its soundtrack was added to the U.S. National Recording Registry in 2004. Today, it is often regarded as one of the most important films in the history of motion pictures. It launched an industry of tie-in products, including TV series spinoffs, novels, comic books, and video games, and merchandise including toys, games and clothing., \"The films success led to two critically and commercially successful sequels, The Empire Strikes Back in 1980 and Return of the Jedi in 1983. Star Wars was reissued multiple times at Lucas behest, incorporating many changes including modified computer-generated effects, altered dialogue, re-edited shots, remixed soundtracks, and added scenes. A prequel trilogy was released beginning with The Phantom Menace in 1999, continuing with Attack of the Clones in 2002, and concluding with Revenge of the Sith in 2005. The film was followed by a sequel trilogy beginning with The Force Awakens in 2015. A direct prequel, Rogue One, was released in 2016. The films fourth sequel, The Last Jedi, will be released in December 2017.\""^^xsd:string ;
+    ns1:director "George Lucas"^^xsd:string ;
+    ns1:episodeId 4 ;
+    ns1:openingCrawl """It is a period of civil war.\r
+Rebel spaceships, striking\r
+from a hidden base, have won\r
+their first victory against\r
+the evil Galactic Empire.\r
+\r
+During the battle, Rebel\r
+spies managed to steal secret\r
+plans to the Empire's\r
+ultimate weapon, the DEATH\r
+STAR, an armored space\r
+station with enough power\r
+to destroy an entire planet.\r
+\r
+Pursued by the Empire's\r
+sinister agents, Princess\r
+Leia races home aboard her\r
+starship, custodian of the\r
+stolen plans that can save her\r
+people and restore\r
+freedom to the galaxy...."""^^xsd:string ;
+    ns1:planet <https://swapi.co/resource/planet/1>,
+        <https://swapi.co/resource/planet/2>,
+        <https://swapi.co/resource/planet/3> ;
+    ns1:releaseDate "1977-05-25"^^xsd:date ;
+    ns1:starship <https://swapi.co/resource/starship/10>,
+        <https://swapi.co/resource/starship/11>,
+        <https://swapi.co/resource/starship/12>,
+        <https://swapi.co/resource/starship/13>,
+        <https://swapi.co/resource/starship/2>,
+        <https://swapi.co/resource/starship/3>,
+        <https://swapi.co/resource/starship/5>,
+        <https://swapi.co/resource/starship/9> ;
+    ns1:vehicle <https://swapi.co/resource/vehicle/4>,
+        <https://swapi.co/resource/vehicle/6>,
+        <https://swapi.co/resource/vehicle/7>,
+        <https://swapi.co/resource/vehicle/8> .
+
