@@ -5,62 +5,15 @@
 
 import ipywidgets as W
 import traitlets as T
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers.rdf import SparqlLexer
-from pygments.styles import STYLE_MAP
 
 from .query_form import QueryInput
+from .visualize import QueryColorizer
 
 # TODO improve
 query_template = """{}
 {}
 WHERE {}
 """
-
-
-class QueryColorizer(W.VBox):
-    """Takes sparql query and runs it through pygments lexer and html formatter"""
-
-    query = T.Unicode()
-    formatter_style = T.Enum(values=list(STYLE_MAP.keys()), default_value="colorful")
-    style_picker = T.Instance(
-        W.Dropdown,
-        kw=dict(
-            description="Style",
-            options=list(STYLE_MAP.keys()),
-            layout=W.Layout(min_height="30px"),
-        ),
-    )
-    html_output = T.Instance(W.HTML, kw={})
-
-    _style_defs = T.Unicode(default_value="")
-    formatter: HtmlFormatter = None
-    _sqrl_lexer: SparqlLexer = None
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        T.link((self, "formatter_style"), (self.style_picker, "value"))
-        self.children = [self.style_picker, self.html_output]
-
-    @T.observe("formatter_style")
-    def _update_style(self, change=None) -> HtmlFormatter:
-        """update the css style from the formatter"""
-        self.formatter = HtmlFormatter(style=self.formatter_style)
-        self._sqrl_lexer = SparqlLexer()
-        self._style_defs = f"<style>{self.formatter.get_style_defs()}</style>"
-
-    @T.observe(
-        "query",
-        "_style_defs",
-    )
-    def update_formatted_query(self, change):
-        """Update the html output widget with the highlighted query"""
-        if not self.formatter or not self._sqrl_lexer:
-            self._update_style()
-        self.html_output.value = self._style_defs + highlight(
-            self.query, self._sqrl_lexer, self.formatter
-        )
 
 
 class QueryConstructor(W.HBox):

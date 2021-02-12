@@ -17,8 +17,19 @@ default_ns = {
 
 
 def collapse_namespace(namespaces, cell):
-    """TODO"""
+    """
+    TODO prevent from collapsing a partial namespace
+    e.g.
+    PREFIX ex: <https://example.org/>
+    URI = https://example.org/thing/stuff
+
+    current behavior: ex:thing/stuff
+    expected behavior: no collapsing
+    """
     uf_link = """<a href=\"{}" target=\"_blank\">{}</a>"""
+
+    if isinstance(namespaces, dict):
+        namespaces = tuple(namespaces.items())
 
     or_statement = "|".join([uri for _, uri in namespaces])
     pattern = f"({or_statement}).*"
