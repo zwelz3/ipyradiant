@@ -72,7 +72,7 @@ def task_preflight():
     yield _ok(
         dict(
             name="lab",
-            file_dep=[*file_dep, P.LAB_INDEX, P.OK_ENV["dev"]],
+            file_dep=[*file_dep, P.OK_ENV["dev"]],
             actions=[[*P.APR_DEV, *P.PREFLIGHT, "lab"]],
         ),
         P.OK_PREFLIGHT_LAB,
@@ -92,7 +92,6 @@ def task_binder():
     """get to a minimal interactive environment"""
     return dict(
         file_dep=[
-            P.LAB_INDEX,
             P.OK_PIP_INSTALL,
             P.OK_PREFLIGHT_KERNEL,
             P.OK_PREFLIGHT_LAB,
@@ -342,44 +341,6 @@ def task_lint():
     )
 
 
-def task_lab_build():
-    """do a "production" build of lab"""
-    exts = [
-        line.strip()
-        for line in P.EXTENSIONS.read_text().strip().splitlines()
-        if line and not line.startswith("#")
-    ]
-
-    def _clean():
-        _call([*P.APR_DEV, "jlpm", "cache", "clean"])
-        _call([*P.APR_DEV, *P.LAB, "clean", "--all"])
-
-        return True
-
-    def _build():
-        return _call([*P.APR_DEV, "lab:build"]) == 0
-
-    file_dep = [P.EXTENSIONS, P.OK_ENV["dev"]]
-
-    yield dict(
-        name="extensions",
-        file_dep=file_dep,
-        actions=[
-            _clean,
-            [
-                *P.APR_DEV,
-                *P.LAB_EXT,
-                "disable",
-                "@jupyterlab/extension-manager-extension",
-            ],
-            [*P.APR_DEV, *P.LAB_EXT, "install", "--debug", "--no-build", *exts],
-            _build,
-            [*P.APR_DEV, *P.LAB_EXT, "list"],
-        ],
-        targets=[P.LAB_INDEX],
-    )
-
-
 def task_lab():
     """run JupyterLab "normally" (not watching sources)"""
 
@@ -400,7 +361,7 @@ def task_lab():
 
     return dict(
         uptodate=[lambda: False],
-        file_dep=[P.LAB_INDEX, P.OK_PIP_INSTALL, P.OK_PREFLIGHT_LAB],
+        file_dep=[P.OK_PIP_INSTALL, P.OK_PREFLIGHT_LAB],
         actions=[PythonInteractiveAction(lab)],
     )
 

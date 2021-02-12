@@ -29,7 +29,7 @@ Notebook Classic.
 
 For JupyterLab support, ensure you have the following installed:
 
-- `jupyterlab >=1`
+- `jupyterlab >=3`
 - `nodejs >=10`
 
 ## JupyterLab compatibility
@@ -42,8 +42,6 @@ some researched combinations that should work.
 
 | `jupyterlab` | `ipycytoscape`   | `pyviz_comms` | `pip install`      |
 | ------------ | ---------------- | ------------- | ------------------ |
-| `>=1,<2`     | `>=1.0.3,<1.1.0` | `>=1,<1.0.3`  | `ipyradiant[lab1]` |
-| `>=2,<3`     | `>=1.0.3,<1.1.0` | `>=1,<1.0.3`  | `ipyradiant[lab2]` |
 | `>=3,<4`     | `>=1.1.0`        | `>=1.0.3`     | `ipyradiant[lab3]` |
 
 ## Install
@@ -58,14 +56,6 @@ conda install -c conda-forge ipyradiant
 
 ```bash
 pip install ipyradiant
-```
-
-### JupyterLab Extensions
-
-Install the lab extensions that `ipyradiant` depends on.
-
-```bash
-jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-cytoscape @pyviz/jupyterlab_pyviz qgrid2
 ```
 
 > For additional information, see [CONTRIBUTING.md][contributing]

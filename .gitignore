@@ -16,6 +16,7 @@ build/
 design/local/
 dist/
 envs/
+_scripts/local/
 examples/**/*.html
 lib/
 node_modules/

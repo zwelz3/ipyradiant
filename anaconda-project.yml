@@ -57,7 +57,7 @@ env_specs:
       - black
       - flake8
       - isort >=5
-      - jupyterlab ==2.2.5
+      - jupyterlab >=3.0.0
       - nbformat
       - nodejs >=12,<13.0.0a0
       - pyflakes
@@ -76,11 +76,11 @@ env_specs:
       - datashader
       - hvplot
       - importnb
-      - ipycytoscape >=1.0.3,<1.1.0
+      - ipycytoscape >=1.2
       - ipython >=7.20
-      - ipywidgets
-      - pyviz_comms <1.0.3
-      - jupyterlab ==2.2.5
+      - ipywidgets >=7.6,<8
+      - pyviz_comms
+      - jupyterlab >=3.0.0
       - networkx >=2
       - nodejs >=12,<13.0.0a0
       - numpy
