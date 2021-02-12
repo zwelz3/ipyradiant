@@ -353,6 +353,5 @@ class InteractiveViewer(W.VBox):
 
     def update_cytoscape_frontend(self):
         """A temporary workaround to trigger a frontend refresh"""
-
         self.cytoscape_widget.graph.add_node(cyto.Node(data={"id": "random node"}))
         self.cytoscape_widget.graph.remove_node_by_id("random node")

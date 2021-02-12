@@ -210,14 +210,15 @@ class RDF2NX:
             NamespaceManager, Dict[str, Union[str, Namespace, URIRef]]
         ] = None,
         strict: bool = False,
-        include_missing_nodes: bool = False,
+        external_graph: RDFGraph = None,
     ) -> MultiDiGraph:
         """The main method for converting an RDF graph to a networkx representation.
 
         :param rdf_graph: the rdflib.graph.Graph containing the raw data
         :param namespaces: the collection of namespaces used to simplify URIs
         :param strict: boolean for Literal conversion (True = supported types only)
-        :param include_missing_nodes: flag for creating placeholder nodes for missing source/target
+        :param external_graph: if provided, the converter will also return connected nodes
+           (e.g. triple targets) as LPG nodes using the external_graph to collect their data
         :return: the networkx MultiDiGraph containing all collected node/edge data
         """
         if cls.initNs is None:
@@ -248,12 +249,15 @@ class RDF2NX:
             if edge_source in nx_graph.nodes and edge_target in nx_graph.nodes:
                 edge_attrs["iri"] = edge_iri
                 nx_graph.add_edge(edge_source, edge_target, **edge_attrs)
-            elif include_missing_nodes:
-                # TODO is there a simple way to get labels here?
+            elif external_graph is not None:
                 if edge_source not in nx_graph.nodes:
-                    nx_graph.add_node(edge_source)
+                    node_data = cls.transform_nodes(external_graph, node_iris=[edge_source], strict=strict)
+                    assert edge_source in node_data
+                    nx_graph.add_node(edge_source, **node_data[edge_source])
                 elif edge_target not in nx_graph.nodes:
-                    nx_graph.add_node(edge_target)
+                    node_data = cls.transform_nodes(external_graph, node_iris=[edge_target], strict=strict)
+                    assert edge_target in node_data
+                    nx_graph.add_node(edge_target, **node_data[edge_target])
                 nx_graph.add_edge(edge_source, edge_target, **edge_attrs)
             else:
                 if edge_source not in nx_graph.nodes:
