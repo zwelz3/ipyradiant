@@ -6,10 +6,10 @@ import traitlets as T
 from ipycytoscape import CytoscapeWidget
 from IPython.display import JSON, display
 from networkx import Graph as NXGraph
-from rdflib import Graph as RDFGraph
+from rdflib import Graph as RDFGraph, URIRef
 
 from ...basic_tools.custom_uri_ref import CustomURI
-from ...basic_tools.uri_widgets import SelectMultipleURI
+from ...basic_tools.uri_widgets import SelectURI, SelectMultipleURI
 from ...query.api import SPARQLQueryFramer, build_values
 from ...rdf2nx import RDF2NX
 from .interactive_exploration import InteractiveViewer
@@ -71,14 +71,14 @@ class MetaSubjectsOfType(type):
         return build_values(cls._sparql, cls.values)
 
 
-class RDFTypeSelectMultiple(W.VBox):
+class RDFTypeSelect(W.VBox):
     """Widget that contains node types present in the graph.
     Uses a library query, and the graph object's namespace.
     """
 
     graph = T.Instance(RDFGraph, allow_none=True)
     label = T.Instance(W.HTML)
-    select_widget = T.Instance(SelectMultipleURI)
+    select_widget = T.Instance(SelectURI)
 
     @T.default("label")
     def make_default_label(self):
@@ -86,7 +86,7 @@ class RDFTypeSelectMultiple(W.VBox):
 
     @T.default("select_widget")
     def make_default_select_widget(self):
-        return SelectMultipleURI(rows=10)
+        return SelectURI(rows=10)
 
     @T.validate("children")
     def validate_children(self, proposal):
@@ -115,7 +115,15 @@ class RDFTypeSelectMultiple(W.VBox):
         )
 
 
-class RDFSubjectSelectMultiple(W.VBox):
+class RDFTypeSelectMultiple(RDFTypeSelect):
+    select_widget = T.Instance(SelectMultipleURI)
+
+    @T.default("select_widget")
+    def make_default_select_widget(self):
+        return SelectMultipleURI(rows=10)
+
+
+class RDFSubjectSelect(W.VBox):
     """Widget that contains subjects in the graph based on type _values."""
 
     # Define the query class
@@ -125,7 +133,7 @@ class RDFSubjectSelectMultiple(W.VBox):
     graph = T.Instance(RDFGraph, allow_none=True).tag(default=None)
     label = T.Instance(W.HTML)
     query = SubjectsOfType
-    select_widget = T.Instance(SelectMultipleURI)
+    select_widget = T.Instance(SelectURI)
     _values = T.Instance(dict, allow_none=True).tag(default=None)
 
     @T.default("label")
@@ -134,7 +142,7 @@ class RDFSubjectSelectMultiple(W.VBox):
 
     @T.default("select_widget")
     def make_default_select_widget(self):
-        return SelectMultipleURI(rows=10)
+        return SelectURI(rows=10)
 
     @T.validate("children")
     def validate_children(self, proposal):
@@ -175,12 +183,20 @@ class RDFSubjectSelectMultiple(W.VBox):
         )
 
 
-class GraphExploreNodeSelection(W.VBox):
-    """Widget that allows users to select subjects in the graph using a type filter."""
+class RDFSubjectSelectMultiple(RDFSubjectSelect):
+    select_widget = T.Instance(SelectMultipleURI)
+
+    @T.default("select_widget")
+    def make_default_select_widget(self):
+        return SelectMultipleURI(rows=10)
+
+
+class GraphExploreSelect(W.VBox):
+    """Widget that allows users to select a subject in the graph using a type filter."""
 
     graph = T.Instance(RDFGraph, kw={})
-    subject_select = T.Instance(RDFSubjectSelectMultiple)
-    type_select = T.Instance(RDFTypeSelectMultiple)
+    subject_select = T.Instance(RDFSubjectSelect)
+    type_select = T.Instance(RDFTypeSelect)
 
     @property
     def selected_types(self):
@@ -196,6 +212,41 @@ class GraphExploreNodeSelection(W.VBox):
         if not children:
             children = (self.type_select, self.subject_select)
         return children
+
+    @T.default("type_select")
+    def make_default_type_select(self):
+        type_selector = RDFTypeSelect()
+        type_selector.graph = self.graph
+        type_selector.select_widget.observe(self.update_subject_select_value, "value")
+        return type_selector
+
+    @T.default("subject_select")
+    def make_default_subject_select(self):
+        subject_selector = RDFSubjectSelect()
+        subject_selector.graph = self.graph
+        return subject_selector
+
+    @T.observe("graph")
+    def update_subwidget_graphs(self, change):
+        # reset the subject select options and value
+        self.subject_select.select_widget.options = ()
+        self.subject_select.select_widget.value = None
+        self.subject_select._values = None
+
+        self.type_select.graph = self.graph
+        self.subject_select.graph = self.graph
+
+    def update_subject_select_value(self, change):
+        if change.old != change.new and change.new:
+            # Note: change.new == self.type_select.select_widget.value
+            self.subject_select._values = {"type": [change.new]}
+
+
+class GraphExploreSelectMultiple(GraphExploreSelect):
+    """Widget that allows users to select multiple subjects in the graph using a type filter."""
+
+    subject_select = T.Instance(RDFSubjectSelectMultiple)
+    type_select = T.Instance(RDFTypeSelectMultiple)
 
     @T.default("type_select")
     def make_default_type_select(self):
@@ -232,10 +283,17 @@ class GraphExplorer(W.VBox):
     rdf_graph = T.Instance(RDFGraph, kw={})
     nx_graph = T.Instance(NXGraph, kw={})
     # collapse_button = T.Instance(W.Button)
-    node_select = T.Instance(GraphExploreNodeSelection)
+    node_select = T.Union(
+        (
+            T.Instance(GraphExploreSelect),
+            T.Instance(GraphExploreSelectMultiple)
+        )
+    )
     interactive_viewer = T.Instance(InteractiveViewer)
     default_children = T.Tuple()
     json_output = W.Output()
+    # class attr to support multi-select TODO better way to do this?
+    _multiple = True   
 
     @T.validate("children")
     def validate_children(self, proposal):
@@ -264,7 +322,10 @@ class GraphExplorer(W.VBox):
 
     @T.default("node_select")
     def make_default_node_select(self):
-        node_selector = GraphExploreNodeSelection()
+        if self._multiple:
+            node_selector = GraphExploreSelectMultiple()
+        else:
+            node_selector = GraphExploreSelect()
         node_selector.subject_select.select_widget.observe(self.make_nx_graph, "value")
         return node_selector
 
@@ -304,6 +365,9 @@ class GraphExplorer(W.VBox):
 
     def make_nx_graph(self, change):
         sssw_value = self.node_select.subject_select.select_widget.value
+        # For single-select, this will not be a list
+        if isinstance(sssw_value, URIRef):
+            sssw_value = [sssw_value]
         # TODO do we want the convert_nodes to add edges between the nodes?
         self.nx_graph = RDF2NX.convert_nodes(
             node_uris=sssw_value, rdf_graph=self.rdf_graph

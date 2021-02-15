@@ -5,7 +5,11 @@ import ipywidgets as W
 import networkx as nx
 import rdflib
 import traitlets as T
-from ipycytoscape.cytoscape import Graph as CytoscapeGraph, MutableList, MutableDict
+
+from warnings import warn
+
+from ipycytoscape.cytoscape import Graph as CytoscapeGraph
+from ipycytoscape.cytoscape import MutableDict, MutableList
 
 from ipyradiant.rdf2nx import RDF2NX
 from ipyradiant.visualization.cytoscape import style
@@ -118,10 +122,11 @@ class CytoscapeViewer(W.VBox):
 
     @T.observe("graph")
     def _update_graph(self, change):
-        # TODO Clear graph so that data isn't duplicated 
+        # TODO Clear graph so that data isn't duplicated
         #   (blocked by https://github.com/QuantStack/ipycytoscape/issues/61)
         # Temporary workaround to clear graph by making a completely new widget
-        self.cytoscape_widget = self._make_cytoscape_widget()        
+        self.cytoscape_widget = self._make_cytoscape_widget()
+        warn("Clearing ipycytoscape graphs may lead to ghost nodes. This is a known issue and will be addressed in a future update.")
 
         if isinstance(self.graph, nx.Graph):
             self.cytoscape_widget.graph.add_graph_from_networkx(self.graph)

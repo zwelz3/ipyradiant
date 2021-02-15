@@ -251,11 +251,15 @@ class RDF2NX:
                 nx_graph.add_edge(edge_source, edge_target, **edge_attrs)
             elif external_graph is not None:
                 if edge_source not in nx_graph.nodes:
-                    node_data = cls.transform_nodes(external_graph, node_iris=[edge_source], strict=strict)
+                    node_data = cls.transform_nodes(
+                        external_graph, node_iris=[edge_source], strict=strict
+                    )
                     assert edge_source in node_data
                     nx_graph.add_node(edge_source, **node_data[edge_source])
                 elif edge_target not in nx_graph.nodes:
-                    node_data = cls.transform_nodes(external_graph, node_iris=[edge_target], strict=strict)
+                    node_data = cls.transform_nodes(
+                        external_graph, node_iris=[edge_target], strict=strict
+                    )
                     assert edge_target in node_data
                     nx_graph.add_node(edge_target, **node_data[edge_target])
                 nx_graph.add_edge(edge_source, edge_target, **edge_attrs)

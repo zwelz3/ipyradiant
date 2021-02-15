@@ -196,7 +196,7 @@ class InteractiveViewer(W.VBox):
     @trt.observe("cytoscape_widget")
     def update_cytoscape_widget(self, change):
         """Apply settings to cytoscape graph when updating"""
-
+        
         if change.old == change.new:
             return
 

@@ -4,16 +4,22 @@
 __all__ = [
     "GetOutgoingPredicateObjects",
     "GraphExplorer",
-    "GraphExploreNodeSelection",
+    "GraphExploreSelect",
+    "GraphExploreSelectMultiple",
     "InteractiveViewer",
+    "RDFSubjectSelect",
     "RDFSubjectSelectMultiple",
+    "RDFTypeSelect",
     "RDFTypeSelectMultiple",
 ]
 
 from .graph_explorer import (
-    GraphExploreNodeSelection,
+    GraphExploreSelect,
+    GraphExploreSelectMultiple,
     GraphExplorer,
+    RDFSubjectSelect,
     RDFSubjectSelectMultiple,
+    RDFTypeSelect,
     RDFTypeSelectMultiple,
 )
 from .interactive_exploration import GetOutgoingPredicateObjects, InteractiveViewer
