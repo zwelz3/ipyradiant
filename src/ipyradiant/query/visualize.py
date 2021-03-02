@@ -1,3 +1,6 @@
+# Copyright (c) 2021 ipyradiant contributors.
+# Distributed under the terms of the Modified BSD License.
+
 import IPython
 import ipywidgets as W
 import traitlets as T
@@ -6,8 +9,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers.rdf import SparqlLexer
 from pygments.styles import STYLE_MAP
-from rdflib import Graph, URIRef
-from rdflib.namespace import NamespaceManager
+from rdflib import URIRef
 from rdflib.plugins.sparql.processor import SPARQLResult
 
 from ipyradiant.query.namespace_manager import collapse_namespace
@@ -154,6 +156,7 @@ class QueryResultsGrid(W.Box):
     def run_query(self, change):
         # TODO move to validate method?
         self.current_dataframe = DataFrame(self.query_result)
+        # TODO set columns
         collapsed_data = DataFrame(self.query_result)
         for ii, row in collapsed_data.iterrows():
             for jj, cell in enumerate(row):

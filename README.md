@@ -40,9 +40,9 @@ them.
 The release of JupyterLab 3 has made some version compatibility unpredictable. Below are
 some researched combinations that should work.
 
-| `jupyterlab` | `ipycytoscape`   | `pyviz_comms` | `pip install`      |
-| ------------ | ---------------- | ------------- | ------------------ |
-| `>=3,<4`     | `>=1.1.0`        | `>=1.0.3`     | `ipyradiant[lab3]` |
+| `jupyterlab` | `ipycytoscape` | `pyviz_comms` | `pip install`      |
+| ------------ | -------------- | ------------- | ------------------ |
+| `>=3,<4`     | `>=1.1.0`      | `>=1.0.3`     | `ipyradiant[lab3]` |
 
 ## Install
 
