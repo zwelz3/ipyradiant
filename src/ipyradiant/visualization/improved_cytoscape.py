@@ -1,14 +1,13 @@
 # Copyright (c) 2021 ipyradiant contributors.
 # Distributed under the terms of the Modified BSD License.
 
+from warnings import warn
+
 import ipycytoscape as cyto
 import ipywidgets as W
 import networkx as nx
 import rdflib
 import traitlets as T
-
-from warnings import warn
-
 from ipycytoscape.cytoscape import Graph as CytoscapeGraph
 from ipycytoscape.cytoscape import MutableDict, MutableList
 
@@ -68,7 +67,7 @@ class CytoscapeViewer(W.VBox):
 
         TODO this is not maintainable
         """
-        style_list = [style.DIRECTED_EDGE, style.MULTIPLE_EDGES]
+        style_list = [style.NODE_CLICKED, style.DIRECTED_EDGE, style.MULTIPLE_EDGES]
         if self.node_labels and self.edge_labels:
             style_list = style.LABELLED_DIRECTED_GRAPH
         elif not self.node_labels and not self.edge_labels:
@@ -85,10 +84,12 @@ class CytoscapeViewer(W.VBox):
 
         self.cyto_style = style_list
 
-    def update_cytoscape_frontend(self):
+    def _update_cytoscape_frontend(self):
         """A temporary workaround to trigger a frontend refresh"""
-        
-        self.cytoscape_widget.graph.add_node(cyto.Node(data={"id": "random node"}))
+
+        node = cyto.Node(data={"id": "random node"})
+        self.cytoscape_widget.graph.add_node(node)
+        node.removed = True
         self.cytoscape_widget.graph.remove_node_by_id("random node")
 
     @T.default("cyto_style")
@@ -127,8 +128,10 @@ class CytoscapeViewer(W.VBox):
         # TODO Clear graph so that data isn't duplicated
         #   (blocked by https://github.com/QuantStack/ipycytoscape/issues/61)
         # Temporary workaround to clear graph by making a completely new widget
-        self.cytoscape_widget = self._make_cytoscape_widget()
-        warn("Clearing ipycytoscape graphs may lead to ghost nodes. This is a known issue and will be addressed in a future update.")
+        self.cytoscape_widget = self._make_cytoscape_widget(old_widget=self.cytoscape_widget)
+        warn(
+            "Clearing ipycytoscape graphs may lead to ghost nodes. This is a known issue and will be addressed in a future update."
+        )
 
         if isinstance(self.graph, nx.Graph):
             self.cytoscape_widget.graph.add_graph_from_networkx(self.graph)
@@ -147,11 +150,9 @@ class CytoscapeViewer(W.VBox):
                 node.data["_label"] = node.data.get(
                     self._rdf_label, node.data.get("id", None)
                 )
-        # TODO remove when ipycytoscape issue #61 gets resolved
-        self.update_cytoscape_frontend()
 
     @T.default("cytoscape_widget")
-    def _make_cytoscape_widget(self):
+    def _make_cytoscape_widget(self, old_widget=None):
         widget = cyto.CytoscapeWidget()
         widget.set_layout(
             animate=self.animate,
@@ -160,6 +161,15 @@ class CytoscapeViewer(W.VBox):
             maxSimulationTime=1000,
         )
         widget.set_style(self.cyto_style)
+        if old_widget:
+            for item, events in old_widget._interaction_handlers.items():
+                for event, dispatcher in events.items():
+                    for callback in dispatcher.callbacks:
+                        callback_owner = getattr(callback, "__self__", None)
+                        if callback_owner == old_widget:
+                            callback = getattr(widget, callback.__name__)
+                        widget.on(item, event, callback)
+                                            
         return widget
 
     @T.observe("node_labels", "edge_labels")
