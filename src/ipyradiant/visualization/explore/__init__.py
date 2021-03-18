@@ -14,9 +14,9 @@ __all__ = [
 ]
 
 from .graph_explorer import (
+    GraphExplorer,
     GraphExploreSelect,
     GraphExploreSelectMultiple,
-    GraphExplorer,
     RDFSubjectSelect,
     RDFSubjectSelectMultiple,
     RDFTypeSelect,

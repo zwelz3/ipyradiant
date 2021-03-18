@@ -84,7 +84,7 @@ def add_cyto_class(element: Union[cyto.Node, cyto.Edge], class_addition: str) ->
     :return: the class string
     """
     try:
-        classes = set(element.classes.split(" "))
+        classes = set(element.classes.split())
     except AttributeError:
         classes = set()
     classes.add(class_addition)
@@ -101,7 +101,7 @@ def remove_cyto_class(element: Union[cyto.Node, cyto.Edge], class_removal: str) 
     :return: the class string
     """
     try:
-        classes = set(element.classes.split(" "))
+        classes = set(element.classes.split())
         classes.discard(class_removal)
         return " ".join(classes)
     except AttributeError:
@@ -196,7 +196,7 @@ class InteractiveViewer(W.VBox):
     @trt.observe("cytoscape_widget")
     def update_cytoscape_widget(self, change):
         """Apply settings to cytoscape graph when updating"""
-        
+
         if change.old == change.new:
             return
 

@@ -3,6 +3,7 @@
 
 import logging
 import re
+from copy import deepcopy
 
 from pandas import DataFrame
 from rdflib import Graph, URIRef
@@ -27,6 +28,7 @@ def build_values(string: str, values: dict) -> str:
     TODO should values be a NamedTuple with different structure to improve readability?
     """
     assert values, "Input values cannot be empty."
+    values = deepcopy(values)
     assert (
         len(set([len(_) for _ in values.values()])) == 1
     ), "All values must have equal length."

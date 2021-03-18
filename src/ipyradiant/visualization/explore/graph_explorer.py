@@ -6,10 +6,11 @@ import traitlets as T
 from ipycytoscape import CytoscapeWidget
 from IPython.display import JSON, display
 from networkx import Graph as NXGraph
-from rdflib import Graph as RDFGraph, URIRef
+from rdflib import Graph as RDFGraph
+from rdflib import URIRef
 
 from ...basic_tools.custom_uri_ref import CustomURI
-from ...basic_tools.uri_widgets import SelectURI, SelectMultipleURI
+from ...basic_tools.uri_widgets import SelectMultipleURI, SelectURI
 from ...query.api import SPARQLQueryFramer, build_values
 from ...rdf2nx import RDF2NX
 from .interactive_exploration import InteractiveViewer
@@ -284,16 +285,13 @@ class GraphExplorer(W.VBox):
     nx_graph = T.Instance(NXGraph, kw={})
     # collapse_button = T.Instance(W.Button)
     node_select = T.Union(
-        (
-            T.Instance(GraphExploreSelect),
-            T.Instance(GraphExploreSelectMultiple)
-        )
+        (T.Instance(GraphExploreSelect), T.Instance(GraphExploreSelectMultiple))
     )
     interactive_viewer = T.Instance(InteractiveViewer)
     default_children = T.Tuple()
     json_output = W.Output()
     # class attr to support multi-select TODO better way to do this?
-    _multiple = True   
+    _multiple = True
 
     @T.validate("children")
     def validate_children(self, proposal):

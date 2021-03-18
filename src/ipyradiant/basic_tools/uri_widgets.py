@@ -7,12 +7,12 @@ from rdflib import URIRef
 
 class SelectURI(W.Select):
     """Widget for selecting URIs that have custom representations
-    
+
     TODO can this be combined with SelectMultipleURI?
     """
 
-    pithy_uris = T.Tuple()  # tuple of uri class instances (e.g. CustomURI)
-    uri_map = T.Tuple()  # T.Tuple(T.Instance(URIRef), T.Instance(CustomURI))
+    pithy_uris = T.List()  # tuple of uri class instances (e.g. CustomURI)
+    uri_map = T.List()  # T.Tuple(T.Instance(URIRef), T.Instance(CustomURI))
 
     @T.observe("pithy_uris")
     def update_pithy_uris(self, change):
@@ -30,10 +30,10 @@ class SelectURI(W.Select):
         ), "URI objects must have a 'uri' attr."
 
         # replace uri_map
-        self.uri_map = tuple((uri.uri, uri) for uri in self.pithy_uris)
+        self.uri_map = list((uri.uri, uri) for uri in self.pithy_uris)
 
         # replace options
-        self.options = tuple(
+        self.options = list(
             sorted([tup[::-1] for tup in self.uri_map], key=lambda x: str(x[0]))
         )
 
@@ -55,8 +55,8 @@ class SelectURI(W.Select):
 class SelectMultipleURI(W.SelectMultiple):
     """Widget for selecting URIs that have custom representations"""
 
-    pithy_uris = T.Tuple()  # tuple of uri class instances (e.g. CustomURI)
-    uri_map = T.Tuple()  # T.Tuple(T.Instance(URIRef), T.Instance(CustomURI))
+    pithy_uris = T.List()  # tuple of uri class instances (e.g. CustomURI)
+    uri_map = T.List()  # T.Tuple(T.Instance(URIRef), T.Instance(CustomURI))
 
     @T.observe("pithy_uris")
     def update_pithy_uris(self, change):
@@ -74,10 +74,10 @@ class SelectMultipleURI(W.SelectMultiple):
         ), "URI objects must have a 'uri' attr."
 
         # replace uri_map
-        self.uri_map = tuple((uri.uri, uri) for uri in self.pithy_uris)
+        self.uri_map = list((uri.uri, uri) for uri in self.pithy_uris)
 
         # replace options
-        self.options = tuple(
+        self.options = list(
             sorted([tup[::-1] for tup in self.uri_map], key=lambda x: str(x[0]))
         )
 

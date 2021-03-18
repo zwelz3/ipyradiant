@@ -59,7 +59,7 @@ class CytoscapeViewer(W.VBox):
     _render_large_graphs = False
     _rdf_label = "rdfs:label"
     _nx_label = "label"
-    _rdf_converter: RDF2NX = RDF2NX
+    _rdf_converter: RDF2NX = RDF2NX()
     _rdf_converter_graph = T.Instance(rdflib.Graph, allow_none=True, default_value=None)
 
     def update_style(self):
@@ -128,7 +128,9 @@ class CytoscapeViewer(W.VBox):
         # TODO Clear graph so that data isn't duplicated
         #   (blocked by https://github.com/QuantStack/ipycytoscape/issues/61)
         # Temporary workaround to clear graph by making a completely new widget
-        self.cytoscape_widget = self._make_cytoscape_widget(old_widget=self.cytoscape_widget)
+        self.cytoscape_widget = self._make_cytoscape_widget(
+            old_widget=self.cytoscape_widget
+        )
         warn(
             "Clearing ipycytoscape graphs may lead to ghost nodes. This is a known issue and will be addressed in a future update."
         )
@@ -161,6 +163,7 @@ class CytoscapeViewer(W.VBox):
             maxSimulationTime=1000,
         )
         widget.set_style(self.cyto_style)
+        # TODO need to copy over node classes as well. Is this sustainable??
         if old_widget:
             for item, events in old_widget._interaction_handlers.items():
                 for event, dispatcher in events.items():
@@ -169,7 +172,7 @@ class CytoscapeViewer(W.VBox):
                         if callback_owner == old_widget:
                             callback = getattr(widget, callback.__name__)
                         widget.on(item, event, callback)
-                                            
+
         return widget
 
     @T.observe("node_labels", "edge_labels")
